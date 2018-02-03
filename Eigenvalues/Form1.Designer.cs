@@ -36,8 +36,13 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.metroTextBox3 = new MetroFramework.Controls.MetroTextBox();
             this.groupBox1.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -47,14 +52,13 @@
             this.groupBox1.BackgroundImage = global::Eigenvalues.Properties.Resources._37_37_38;
             this.groupBox1.Controls.Add(this.metroTextBox2);
             this.groupBox1.Controls.Add(this.metroTextBox1);
-            this.groupBox1.Controls.Add(this.metroButton2);
             this.groupBox1.Controls.Add(this.metroButton1);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.groupBox1.Location = new System.Drawing.Point(13, 26);
+            this.groupBox1.Location = new System.Drawing.Point(12, 26);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(661, 108);
+            this.groupBox1.Size = new System.Drawing.Size(679, 108);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
@@ -75,13 +79,14 @@
             // 
             // metroButton2
             // 
-            this.metroButton2.Location = new System.Drawing.Point(435, 52);
+            this.metroButton2.Location = new System.Drawing.Point(209, 19);
             this.metroButton2.Name = "metroButton2";
             this.metroButton2.Size = new System.Drawing.Size(100, 25);
             this.metroButton2.Style = MetroFramework.MetroColorStyle.White;
             this.metroButton2.TabIndex = 7;
             this.metroButton2.Text = "metroButton2";
             this.metroButton2.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroButton2.Click += new System.EventHandler(this.metroButton2_Click);
             // 
             // metroButton1
             // 
@@ -117,10 +122,22 @@
             // panel1
             // 
             this.panel1.BackgroundImage = global::Eigenvalues.Properties.Resources._37_37_38;
-            this.panel1.Location = new System.Drawing.Point(13, 140);
+            this.panel1.Controls.Add(this.groupBox2);
+            this.panel1.Location = new System.Drawing.Point(12, 140);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(658, 264);
+            this.panel1.Size = new System.Drawing.Size(679, 264);
             this.panel1.TabIndex = 1;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.metroTextBox3);
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.metroButton2);
+            this.groupBox2.Location = new System.Drawing.Point(3, 5);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(673, 51);
+            this.groupBox2.TabIndex = 0;
+            this.groupBox2.TabStop = false;
             // 
             // pictureBox1
             // 
@@ -131,6 +148,22 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(13, 24);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(84, 13);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Элемент [1,1] =";
+            // 
+            // metroTextBox3
+            // 
+            this.metroTextBox3.Location = new System.Drawing.Point(103, 20);
+            this.metroTextBox3.Name = "metroTextBox3";
+            this.metroTextBox3.Size = new System.Drawing.Size(100, 20);
+            this.metroTextBox3.TabIndex = 10;
             // 
             // Form1
             // 
@@ -153,6 +186,9 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
@@ -169,6 +205,9 @@
         private MetroFramework.Controls.MetroButton metroButton2;
         private MetroFramework.Controls.MetroButton metroButton1;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private MetroFramework.Controls.MetroTextBox metroTextBox3;
+        private System.Windows.Forms.Label label3;
     }
 }
 
