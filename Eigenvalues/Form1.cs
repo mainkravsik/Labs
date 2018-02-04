@@ -29,17 +29,17 @@ namespace Eigenvalues
             InitializeComponent();
         }
 
-        private void metroTextBox1_Click(object sender, EventArgs e)
+        private void textBox1_Click(object sender, EventArgs e)
         {
 
         }
 
         private void metroButton1_Click(object sender, EventArgs e)
         {
-            if (metroTextBox1.Text != "" && Convert.ToInt32(metroTextBox1.Text) > 1)
+            if (textBox1.Text != "" && Convert.ToInt32(textBox1.Text) > 1)
             {
                 a = true;
-                n = Convert.ToInt32(metroTextBox1.Text);
+                n = Convert.ToInt32(textBox1.Text);
                 A = new double[n, n];
                 B = new double[n];
                 UL = new double[n, n];
@@ -48,14 +48,20 @@ namespace Eigenvalues
                 m2 = 0;
                 m3 = 0;
 
-                
-                label3.Text = "Элемент [1,1] =";
-                
+                groupBox2.Visible = true;
+                metroButton2.Visible = true;
+                metroButton2.Enabled = true;
+                textBox3.Enabled = true;
+                textBox3.Text = "";
+                label2.Text = "Элемент [1,1] =";
+                textBox3.Focus();
+                metroButton1.Enabled = false;
+
             }
             else
             {
                 MessageBox.Show("Введите корректное число элементов!");
-                metroTextBox1.Focus();
+                textBox1.Focus();
 
             }
         }
@@ -102,13 +108,13 @@ namespace Eigenvalues
         }
         private void metroButton2_Click(object sender, EventArgs e)
         {
-            if (metroTextBox3.Text != "")
+            if (textBox3.Text != "")
             {
-                if (metroTextBox3.Text[0] != ',' && metroTextBox3.Text[metroTextBox3.Text.Length - 1] != ',')
+                if (textBox3.Text[0] != ',' && textBox3.Text[textBox3.Text.Length - 1] != ',')
                 {
-                    if (Len(metroTextBox3.Text, ',') <= 1 && Ce(metroTextBox3.Text))
+                    if (Len(textBox3.Text, ',') <= 1 && Ce(textBox3.Text))
                     {
-                        if (metroTextBox3.Text != "" && metroTextBox3.Text != "-")
+                        if (textBox3.Text != "" && textBox3.Text != "-")
                         {
                             if (a)
                             {
@@ -118,7 +124,7 @@ namespace Eigenvalues
                                 L[m1, m2].Left = (50 * m2) + 20;
                                 L[m1, m2].Top = 100 + 25 * m1;
                                 string str;
-                                if (Convert.ToDouble(metroTextBox3.Text) >= 0)
+                                if (Convert.ToDouble(textBox3.Text) >= 0)
                                 {
                                     str = "+";
                                 }
@@ -126,11 +132,11 @@ namespace Eigenvalues
                                 {
                                     str = "-";
                                 }
-                                double g = Convert.ToDouble(metroTextBox3.Text);
-                                if (m2 > n - 1 || (m2 == 0 && g >= 0)) { L[m1, m2].Text = "   " + Convert.ToString(Math.Abs(Convert.ToDouble(metroTextBox3.Text))) + "x" + Convert.ToString(m2 + 1); }
-                                else L[m1, m2].Text = str + "   " + Convert.ToString(Math.Abs(Convert.ToDouble(metroTextBox3.Text))) + "x" + Convert.ToString(m2 + 1);
+                                double g = Convert.ToDouble(textBox3.Text);
+                                if (m2 > n - 1 || (m2 == 0 && g >= 0)) { L[m1, m2].Text = "   " + Convert.ToString(Math.Abs(Convert.ToDouble(textBox3.Text))) + "x" + Convert.ToString(m2 + 1); }
+                                else L[m1, m2].Text = str + "   " + Convert.ToString(Math.Abs(Convert.ToDouble(textBox3.Text))) + "x" + Convert.ToString(m2 + 1);
                                 L[m1, m2].Width = 50;
-                                A[m1, m2] = Convert.ToDouble(metroTextBox3.Text);
+                                A[m1, m2] = Convert.ToDouble(textBox3.Text);
 
 
                                 if (m1 == n - 1 && m2 == n - 1)
@@ -167,8 +173,8 @@ namespace Eigenvalues
 
 
 
-                                metroTextBox3.Focus();
-                                metroTextBox3.Text = "";
+                                textBox3.Focus();
+                                textBox3.Text = "";
 
                             }
                             else
@@ -177,9 +183,9 @@ namespace Eigenvalues
                                 L[m3, n].Parent = panel1;
                                 L[m3, n].Left = 50 * n + 50;
                                 L[m3, n].Top = 100 + 25 * m3;
-                                L[m3, n].Text = metroTextBox3.Text;
+                                L[m3, n].Text = textBox3.Text;
                                 L[m3, n].Width = 40;
-                                B[m3] = Convert.ToDouble(metroTextBox3.Text);
+                                B[m3] = Convert.ToDouble(textBox3.Text);
 
 
                                 if (m3 == n - 1)
@@ -187,7 +193,7 @@ namespace Eigenvalues
                                     label3.Text = "Элемент [1,1] =";
                                     
                                     groupBox2.Visible = false;
-                                    metroTextBox3.Enabled = false;
+                                    textBox3.Enabled = false;
                                     
 
                                 }
@@ -196,8 +202,8 @@ namespace Eigenvalues
                                     m3 += 1;
                                     label3.Text = "Элемент b[" + Convert.ToString(m3 + 1) + "] =";
 
-                                    metroTextBox3.Focus();
-                                    metroTextBox3.Text = "";
+                                    textBox3.Focus();
+                                    textBox3.Text = "";
 
                                 }
                             }
@@ -209,23 +215,55 @@ namespace Eigenvalues
                     }
                     else
                     {
-                        metroTextBox3.Text = "";
+                        textBox3.Text = "";
                         MessageBox.Show("Не корректный формат данных, эжжи!!!");
-                        metroTextBox3.Focus();
+                        textBox3.Focus();
                     }
                 }
                 else
                 {
-                    metroTextBox3.Text = "";
+                    textBox3.Text = "";
                     MessageBox.Show("Не корректный формат данных, эжжи!!!");
-                    metroTextBox3.Focus();
+                    textBox3.Focus();
                 }
             }
             else
             {
-                metroTextBox3.Text = "";
+                textBox3.Text = "";
                 MessageBox.Show("Не корректный формат данных, эжжи!!!");
-                metroTextBox3.Focus();
+                textBox3.Focus();
+            }
+        }
+
+
+
+        private void textBox1_KeyPress_1(object sender, KeyPressEventArgs e)
+        {
+            char number = e.KeyChar;
+
+            if (!Char.IsDigit(number) && number != 8)
+            {
+                e.Handled = true;
+            }
+
+            if (number == 13)
+            {
+                metroButton1_Click(this, EventArgs.Empty);
+            }
+        }
+
+        private void textBox3_KeyPress_1(object sender, KeyPressEventArgs e)
+        {
+            char number = e.KeyChar;
+
+            if (!Char.IsDigit(number) && number != 8 && number != 44 && number != 45)
+            {
+                e.Handled = true;
+            }
+
+            if (e.KeyChar == 13)
+            {
+                metroButton2_Click(this, EventArgs.Empty);
             }
         }
     }
