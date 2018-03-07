@@ -89,5 +89,15 @@ namespace Eigenvalues.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _41b273_58b0c5bb67034fb69b3a317a462d4272 {
+            get {
+                object obj = ResourceManager.GetObject("41b273_58b0c5bb67034fb69b3a317a462d4272", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

@@ -7,11 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MetroFramework.Components;
-using MetroFramework.Forms;
 
 namespace Eigenvalues
 {
+
     public partial class Form1 : Form
     {
         Label[,] L;
@@ -19,6 +18,7 @@ namespace Eigenvalues
         double[] B;
         double[,] UL;
         int n;
+        int pog;
         int m1;
         int m2;
         int m3;
@@ -27,6 +27,7 @@ namespace Eigenvalues
         public Form1()
         {
             InitializeComponent();
+            textBox1.Focus();
         }
 
         private void textBox1_Click(object sender, EventArgs e)
@@ -34,51 +35,54 @@ namespace Eigenvalues
 
         }
 
-        private void metroButton1_Click(object sender, EventArgs e)
-        {
-            if (textBox1.Text != "" && Convert.ToInt32(textBox1.Text) > 1)
-            {
-                a = true;
-                n = Convert.ToInt32(textBox1.Text);
-                A = new double[n, n];
-                B = new double[n];
-                UL = new double[n, n];
-                L = new Label[n, n + 1];
-                m1 = 0;
-                m2 = 0;
-                m3 = 0;
-
-                groupBox2.Visible = true;
-                metroButton2.Visible = true;
-                metroButton2.Enabled = true;
-                textBox3.Enabled = true;
-                textBox3.Text = "";
-                label2.Text = "Элемент [1,1] =";
-                textBox3.Focus();
-                metroButton1.Enabled = false;
-
-            }
-            else
-            {
-                MessageBox.Show("Введите корректное число элементов!");
-                textBox1.Focus();
-
-            }
-        }
+        
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            textBox1.Focus();
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             Close();
         }
-
-        private void metroLabel1_Click(object sender, EventArgs e)
+        public static void WriteLine(string shapka, ref int Y0, ref Panel panel)
         {
+            Label lab = new Label();
 
+            lab.Parent = panel;
+            lab.Left = 20;
+            lab.Top = Y0+75;
+
+            lab.Text = shapka;
+            lab.Width = 500;
+            lab.Height = 13;
+
+            Y0 += 50;
+        }
+
+        public static void LenghtV(double[] b, double n)
+        {
+            double t = 0;
+            for (int i = 1; i <= b.Length - 1; i++)
+            {
+                t = b[i] * b[i] + t;
+            }
+            n = Math.Sqrt(t);
+
+        }
+        
+        static bool Long (string s)
+        {
+            bool T = true;
+            for (int i = 1; i <= s.Length - 1; i++)
+            {
+                if (s[i] == '-')
+                {
+                    T = false;
+                }
+            }
+            return T;
         }
 
         static bool Ce(string s)
@@ -97,7 +101,7 @@ namespace Eigenvalues
         {
             int k = 0;
             for (int i = 0; i < s.Length - 1; i++)
-            {
+            {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
                 if (s[i] == ch)
                 {
                     k += 1;
@@ -106,8 +110,47 @@ namespace Eigenvalues
 
             return k;
         }
-        private void metroButton2_Click(object sender, EventArgs e)
+       
+
+        private void button1_Click(object sender, EventArgs e)
         {
+            
+            if (textBox1.Text != "" && Convert.ToInt32(textBox1.Text) > 1 && textBox2.Text != "")
+            {
+                WriteLine("Матрица А и Нулевое приближение собственного вектора Y: ", ref Ypos, ref panel1);
+                a = true;
+                n = Convert.ToInt32(textBox1.Text);
+                A = new double[n, n];
+                B = new double[n];
+                UL = new double[n, n];
+                L = new Label[n, n + 1];
+                pog = Convert.ToInt32(textBox2.Text);
+                m1 = 0;
+                m2 = 0;
+                m3 = 0;
+
+                groupBox2.Visible = true;
+                button2.Visible = true;
+                button2.Enabled = true;
+                textBox3.Enabled = true;
+                textBox3.Text = "";
+                label3.Text = "Элемент [1,1] =";
+                textBox3.Focus();
+                button1.Enabled = false;
+
+
+            }
+            else
+            {
+                MessageBox.Show("Введите корректное число элементов!");
+                textBox1.Focus();
+
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
             if (textBox3.Text != "")
             {
                 if (textBox3.Text[0] != ',' && textBox3.Text[textBox3.Text.Length - 1] != ',')
@@ -126,15 +169,15 @@ namespace Eigenvalues
                                 string str;
                                 if (Convert.ToDouble(textBox3.Text) >= 0)
                                 {
-                                    str = "+";
+                                    str = " ";
                                 }
                                 else
                                 {
                                     str = "-";
                                 }
                                 double g = Convert.ToDouble(textBox3.Text);
-                                if (m2 > n - 1 || (m2 == 0 && g >= 0)) { L[m1, m2].Text = "   " + Convert.ToString(Math.Abs(Convert.ToDouble(textBox3.Text))) + "x" + Convert.ToString(m2 + 1); }
-                                else L[m1, m2].Text = str + "   " + Convert.ToString(Math.Abs(Convert.ToDouble(textBox3.Text))) + "x" + Convert.ToString(m2 + 1);
+                                if (m2 > n - 1 || (m2 == 0 && g >= 0)) { L[m1, m2].Text = "   " + Convert.ToString(Math.Abs(Convert.ToDouble(textBox3.Text))); }
+                                else L[m1, m2].Text = str + "   " + Convert.ToString(Math.Abs(Convert.ToDouble(textBox3.Text)));
                                 L[m1, m2].Width = 50;
                                 A[m1, m2] = Convert.ToDouble(textBox3.Text);
 
@@ -142,8 +185,9 @@ namespace Eigenvalues
                                 if (m1 == n - 1 && m2 == n - 1)
                                 {
 
-
-                                    label3.Text = "Элемент b[" + Convert.ToString(m3 + 1) + "] =";
+                                    textBox3.Left = 297;
+                                    button2.Left = 394;
+                                    label3.Text = "Нулевое приближение собственного вектора Y[" + Convert.ToString(m3 + 1) + "] =";
 
                                     for (int i = 0; i <= n - 1; i++)
                                     {
@@ -151,7 +195,7 @@ namespace Eigenvalues
                                         LL.Parent = panel1;
                                         LL.Left = 50 * n + 20;
                                         LL.Top = 100 + 25 * i;
-                                        LL.Text = "=";
+                                        LL.Text = "I";
                                         LL.Width = 10;
                                     }
                                     a = false;
@@ -191,16 +235,17 @@ namespace Eigenvalues
                                 if (m3 == n - 1)
                                 {
                                     label3.Text = "Элемент [1,1] =";
-                                    
+
                                     groupBox2.Visible = false;
                                     textBox3.Enabled = false;
-                                    
+
 
                                 }
                                 else
                                 {
+
                                     m3 += 1;
-                                    label3.Text = "Элемент b[" + Convert.ToString(m3 + 1) + "] =";
+                                    label3.Text = "Нулевое приближение собственного вектора Y[" + Convert.ToString(m3 + 1) + "] =";
 
                                     textBox3.Focus();
                                     textBox3.Text = "";
@@ -235,11 +280,10 @@ namespace Eigenvalues
             }
         }
 
-
-
-        private void textBox1_KeyPress_1(object sender, KeyPressEventArgs e)
+        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            char number = e.KeyChar;
+            
+                char number = e.KeyChar;
 
             if (!Char.IsDigit(number) && number != 8)
             {
@@ -247,12 +291,13 @@ namespace Eigenvalues
             }
 
             if (number == 13)
-            {
-                metroButton1_Click(this, EventArgs.Empty);
-            }
+                {
+                    button1_Click(this, EventArgs.Empty);
+                }
+            
         }
 
-        private void textBox3_KeyPress_1(object sender, KeyPressEventArgs e)
+        private void textBox3_KeyPress(object sender, KeyPressEventArgs e)
         {
             char number = e.KeyChar;
 
@@ -263,8 +308,32 @@ namespace Eigenvalues
 
             if (e.KeyChar == 13)
             {
-                metroButton2_Click(this, EventArgs.Empty);
+                button2_Click(this, EventArgs.Empty);
             }
         }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void textBox2_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char number = e.KeyChar;
+
+            if (!Char.IsDigit(number) && number != 8)
+            {
+                e.Handled = true;
+            }
+
+            if (number == 13)
+            {
+                button1_Click(this, EventArgs.Empty);
+            }
+        }
+
+      
+
+        
     }
 }
