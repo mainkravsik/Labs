@@ -16,7 +16,9 @@ namespace Eigenvalues
         Label[,] L;
         double[,] A;
         double[] B;
+        double[] V;
         double[,] UL;
+        double N;
         int n;
         int pog;
         int m1;
@@ -60,15 +62,36 @@ namespace Eigenvalues
 
             Y0 += 50;
         }
-
-        public static void LenghtV(double[] b, double n)
+        public static void FindX(double[] b, double[] c, double n)
         {
-            double t = 0;
+            for (int i = 1; i < b.Length; i++)
+            {
+                c[i] = b[i] / n;
+            }
+        }
+        public static string FindY(double[,] b, double[] c)
+        {
+            string v = Convert.ToString(1);
+            for (int i = 1; i < b.Length; i++)
+            {
+                for (int j = 1; j < c.Length - 1; j++)
+                {
+                    v = Convert.ToString(b[i, j] * c[j]);
+
+                }
+            }
+            return v;
+        }
+
+        public static double LenghtV(double[] b )
+        {
+            double n = 0;
             for (int i = 1; i <= b.Length - 1; i++)
             {
-                t = b[i] * b[i] + t;
+                n = b[i] * b[i] + n;
             }
-            n = Math.Sqrt(t);
+            n = Math.Sqrt(n);
+            return n;
 
         }
         
@@ -230,6 +253,7 @@ namespace Eigenvalues
                                 L[m3, n].Text = textBox3.Text;
                                 L[m3, n].Width = 40;
                                 B[m3] = Convert.ToDouble(textBox3.Text);
+                                
 
 
                                 if (m3 == n - 1)
@@ -332,8 +356,15 @@ namespace Eigenvalues
             }
         }
 
-      
-
-        
+        private void button3_Click(object sender, EventArgs e)
+        {
+            V = new double[n];
+            N =LenghtV(B);
+            FindX(B, V, N);
+            for(int i=0;i<V.Length;i++)
+            {
+                label4.Text += Convert.ToString(Math.Round(V[i]));
+            }
+        }
     }
 }
