@@ -52,15 +52,16 @@ namespace Eigenvalues
         }
         public static void WriteLine(string shapka, ref int Y0, ref Panel panel)
         {
-            Label lab = new Label();
+            Label lab = new Label
+            {
+                Parent = panel,
+                Left = 20,
+                Top = Y0 + 75,
 
-            lab.Parent = panel;
-            lab.Left = 20;
-            lab.Top = Y0+75;
-
-            lab.Text = shapka;
-            lab.Width = 500;
-            lab.Height = 13;
+                Text = shapka,
+                Width = 500,
+                Height = 13
+            };
 
             Y0 += 50;
         }
@@ -158,7 +159,7 @@ namespace Eigenvalues
                 B = new double[n];
                 UL = new double[n, n];
                 L = new Label[n, n + 1];
-                pog = Convert.ToInt32(textBox2.Text);
+                
                 m1 = 0;
                 m2 = 0;
                 m3 = 0;
@@ -195,11 +196,12 @@ namespace Eigenvalues
                         {
                             if (a)
                             {
-                                L[m1, m2] = new Label();
-
-                                L[m1, m2].Parent = panel1;
-                                L[m1, m2].Left = (50 * m2) + 20;
-                                L[m1, m2].Top = 100 + 25 * m1;
+                                L[m1, m2] = new Label
+                                {
+                                    Parent = panel1,
+                                    Left = (50 * m2) + 20,
+                                    Top = 100 + 25 * m1
+                                };
                                 string str;
                                 if (Convert.ToDouble(textBox3.Text) >= 0)
                                 {
@@ -225,12 +227,14 @@ namespace Eigenvalues
 
                                     for (int i = 0; i <= n - 1; i++)
                                     {
-                                        Label LL = new Label();
-                                        LL.Parent = panel1;
-                                        LL.Left = 50 * n + 20;
-                                        LL.Top = 100 + 25 * i;
-                                        LL.Text = "I";
-                                        LL.Width = 10;
+                                        Label LL = new Label
+                                        {
+                                            Parent = panel1,
+                                            Left = 50 * n + 20,
+                                            Top = 100 + 25 * i,
+                                            Text = "I",
+                                            Width = 10
+                                        };
                                     }
                                     a = false;
                                 }
@@ -257,12 +261,14 @@ namespace Eigenvalues
                             }
                             else
                             {
-                                L[m3, n] = new Label();
-                                L[m3, n].Parent = panel1;
-                                L[m3, n].Left = 50 * n + 50;
-                                L[m3, n].Top = 100 + 25 * m3;
-                                L[m3, n].Text = textBox3.Text;
-                                L[m3, n].Width = 40;
+                                L[m3, n] = new Label
+                                {
+                                    Parent = panel1,
+                                    Left = 50 * n + 50,
+                                    Top = 100 + 25 * m3,
+                                    Text = textBox3.Text,
+                                    Width = 40
+                                };
                                 B[m3] = Convert.ToDouble(textBox3.Text);
                                 
 
@@ -381,11 +387,16 @@ namespace Eigenvalues
                 for (int i = 0; i < B.Length; i++)
                 {
                     Lu2[i] = B[i] / V[i];
-                    if (Lu2[i] - Lu1[i] < Convert.ToDouble(textBox2.Text))
+                    if (Lu2[i] - Lu1[i] < Convert.ToDouble(textBox4.Text))
                     {
                         check = false;
                     }
 
+                }
+                for (int i = 0; i < Lu2.Length; i++)
+                {
+                    label4.Text += Convert.ToString(Lu2[i]);
+                    label4.Text += Convert.ToString(',');
                 }
             }
 
@@ -398,7 +409,7 @@ namespace Eigenvalues
             //    label4.Text += Convert.ToString(B[i]);
             //    label4.Text += Convert.ToString(',');
             //}
-            
+
         }
 
         
