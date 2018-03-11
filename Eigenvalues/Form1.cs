@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace Eigenvalues
         double[,] A;
         double[] B;
         double[] V;
+        double[] Lu1; double[] Lu2;
         double[,] UL;
         double N;
         int n;
@@ -62,31 +64,40 @@ namespace Eigenvalues
 
             Y0 += 50;
         }
+        
+        public static void ZeroMass(double[] b)
+        {
+            for (int i = 0; i < b.Length; i++)
+            {
+                b[i] = 0;
+            }
+        }
         public static void FindX(double[] b, double[] c, double n)
         {
-            for (int i = 1; i < b.Length; i++)
+            for (int i = 0; i < b.Length; i++)
             {
                 c[i] = b[i] / n;
             }
         }
-        public static string FindY(double[,] b, double[] c)
+        public static void FindY(double[] a, double[,] b, double[] c)
         {
-            string v = Convert.ToString(1);
-            for (int i = 1; i < b.Length; i++)
+            
+            for (int i = 0; i < c.Length; i++)
             {
-                for (int j = 1; j < c.Length - 1; j++)
+                for (int j = 0; j < c.Length ; j++)
                 {
-                    v = Convert.ToString(b[i, j] * c[j]);
+                    a[i]+=b[i, j] * c[j];
+
 
                 }
             }
-            return v;
+            
         }
-
+       
         public static double LenghtV(double[] b )
         {
             double n = 0;
-            for (int i = 1; i <= b.Length - 1; i++)
+            for (int i = 0; i <= b.Length - 1; i++)
             {
                 n = b[i] * b[i] + n;
             }
@@ -358,13 +369,38 @@ namespace Eigenvalues
 
         private void button3_Click(object sender, EventArgs e)
         {
+            bool check=true;
+            Lu1 = new double[n]; Lu2 = new double[n];
             V = new double[n];
-            N =LenghtV(B);
-            FindX(B, V, N);
-            for(int i=0;i<V.Length;i++)
+            while (check == true)
             {
-                label4.Text += Convert.ToString(Math.Round(V[i]));
+                N = LenghtV(B);
+                FindX(B, V, N);//V=Массиву X(Y/длиннуY)
+                ZeroMass(B);
+                FindY(B, A, V);
+                for (int i = 0; i < B.Length; i++)
+                {
+                    Lu2[i] = B[i] / V[i];
+                    if (Lu2[i] - Lu1[i] < Convert.ToDouble(textBox2.Text))
+                    {
+                        check = false;
+                    }
+
+                }
             }
+
+
+
+
+
+            //for (int i = 0; i < B.Length; i++)
+            //{
+            //    label4.Text += Convert.ToString(B[i]);
+            //    label4.Text += Convert.ToString(',');
+            //}
+            
         }
+
+        
     }
 }
