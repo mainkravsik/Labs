@@ -14,11 +14,12 @@ namespace Eigenvalues
 
     public partial class Form1 : Form
     {
+        
         Label[,] L;
         double[,] A;
         double[] B;
         double[] V;
-        double[] Lu1; double[] Lu2;
+        double[] Lu1; double[] Lu2; double[] Lu3; double[] Lu4;
         double[,] UL;
         double N;
         int n;
@@ -94,8 +95,16 @@ namespace Eigenvalues
             }
 
         }
+        public static void Diag(double[,] a,double[]b,int no)
+        {
+            for (int i = 0; i <no ; i++)
+            {
+                b[i] = a[i, i];
+            }
 
-        public static double LenghtV(double[] b)
+        }
+
+            public static double LenghtV(double[] b)
         {
             double n = 0;
             for (int i = 0; i <= b.Length - 1; i++)
@@ -372,8 +381,10 @@ namespace Eigenvalues
 
         private void button3_Click(object sender, EventArgs e)
         {
+            int no = Convert.ToInt32(textBox1.Text);
             bool check = true;
-            Lu1 = new double[n]; Lu2 = new double[n];
+            int t = 0;
+            Lu1 = new double[n]; Lu2 = new double[n]; Lu3 = new double[n]; Lu4 = new double[n];
             V = new double[n];
             while (check == true)
             {
@@ -389,32 +400,64 @@ namespace Eigenvalues
                         check = false;
                     }
                     Lu1[i] = Lu2[i];
+                    t++;
 
                 }
 
             }
-            for (int i = 0; i < Lu2.Length; i++)
+            ZeroMass(V);
+            Diag(A, V, no);
+            for (int i = 0; i < V.Length; i++)
             {
-                label4.Text += Convert.ToString(Lu2[i]);
-                label4.Text += Convert.ToString(',');
+                B[i] = V[i] - Lu2[i];
+
+            }
+            ZeroMass(V);
+            while (check == true)
+            {
+                N = LenghtV(B);
+                FindX(B, V, N);//V=Массиву X(Y/длиннуY)
+                ZeroMass(B);
+                FindY(B, A, V);
+                for (int i = 0; i < B.Length; i++)
+                {
+                    Lu4[i] = B[i] / V[i];
+                    if (Math.Abs(Lu4[i] - Lu3[i]) < Convert.ToDouble(textBox2.Text))
+                    {
+                        check = false;
+                    }
+                    Lu3[i] = Lu4[i];
+                    t++;
+
+                }
+
             }
 
+            label5.Text += Convert.ToString(t);
+            for (int i = 0; i < Lu2.Length; i++)
+            {
+                
+                label4.Text += Convert.ToString(Math.Round(Lu2[i],3));
+                label4.Text += Convert.ToString("; ");
+                label6.Text += Convert.ToString(Math.Round(Lu4[i], 3));
+                label6.Text += Convert.ToString("; ");
+            }
+            
 
 
 
 
-            //for (int i = 0; i < B.Length; i++)
-            //{
-            //    label4.Text += Convert.ToString(B[i]);
-            //    label4.Text += Convert.ToString(',');
-            //}
+                //for (int i = 0; i < B.Length; i++)
+                //{
+                //    label4.Text += Convert.ToString(B[i]);
+                //    label4.Text += Convert.ToString(',');
+                //}
+
+            }
+
+        private void groupBox3_Enter(object sender, EventArgs e)
+        {
 
         }
-
-
-
-
-
-
     }
 }
