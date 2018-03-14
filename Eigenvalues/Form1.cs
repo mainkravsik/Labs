@@ -39,7 +39,7 @@ namespace Eigenvalues
 
         }
 
-        
+
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -65,7 +65,7 @@ namespace Eigenvalues
 
             Y0 += 50;
         }
-        
+
         public static void ZeroMass(double[] b)
         {
             for (int i = 0; i < b.Length; i++)
@@ -82,20 +82,20 @@ namespace Eigenvalues
         }
         public static void FindY(double[] a, double[,] b, double[] c)
         {
-            
+
             for (int i = 0; i < c.Length; i++)
             {
-                for (int j = 0; j < c.Length ; j++)
+                for (int j = 0; j < c.Length; j++)
                 {
-                    a[i]+=b[i, j] * c[j];
+                    a[i] += b[i, j] * c[j];
 
 
                 }
             }
-            
+
         }
-       
-        public static double LenghtV(double[] b )
+
+        public static double LenghtV(double[] b)
         {
             double n = 0;
             for (int i = 0; i <= b.Length - 1; i++)
@@ -106,8 +106,8 @@ namespace Eigenvalues
             return n;
 
         }
-        
-        static bool Long (string s)
+
+        static bool Long(string s)
         {
             bool T = true;
             for (int i = 1; i <= s.Length - 1; i++)
@@ -136,7 +136,7 @@ namespace Eigenvalues
         {
             int k = 0;
             for (int i = 0; i < s.Length - 1; i++)
-            {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+            {
                 if (s[i] == ch)
                 {
                     k += 1;
@@ -145,11 +145,11 @@ namespace Eigenvalues
 
             return k;
         }
-       
+
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
+
             if (textBox1.Text != "" && Convert.ToInt32(textBox1.Text) > 1 && textBox2.Text != "")
             {
                 WriteLine("Матрица А и Нулевое приближение собственного вектора Y: ", ref Ypos, ref panel1);
@@ -159,7 +159,7 @@ namespace Eigenvalues
                 B = new double[n];
                 UL = new double[n, n];
                 L = new Label[n, n + 1];
-                
+
                 m1 = 0;
                 m2 = 0;
                 m3 = 0;
@@ -270,7 +270,7 @@ namespace Eigenvalues
                                     Width = 40
                                 };
                                 B[m3] = Convert.ToDouble(textBox3.Text);
-                                
+
 
 
                                 if (m3 == n - 1)
@@ -323,8 +323,8 @@ namespace Eigenvalues
 
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            
-                char number = e.KeyChar;
+
+            char number = e.KeyChar;
 
             if (!Char.IsDigit(number) && number != 8)
             {
@@ -332,10 +332,10 @@ namespace Eigenvalues
             }
 
             if (number == 13)
-                {
-                    button1_Click(this, EventArgs.Empty);
-                }
-            
+            {
+                button1_Click(this, EventArgs.Empty);
+            }
+
         }
 
         private void textBox3_KeyPress(object sender, KeyPressEventArgs e)
@@ -353,16 +353,11 @@ namespace Eigenvalues
             }
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void textBox2_KeyPress(object sender, KeyPressEventArgs e)
+        private void textBox2_KeyPress_2(object sender, KeyPressEventArgs e)
         {
             char number = e.KeyChar;
 
-            if (!Char.IsDigit(number) && number != 8)
+            if (!Char.IsDigit(number) && number != ',')
             {
                 e.Handled = true;
             }
@@ -373,9 +368,11 @@ namespace Eigenvalues
             }
         }
 
+
+
         private void button3_Click(object sender, EventArgs e)
         {
-            bool check=true;
+            bool check = true;
             Lu1 = new double[n]; Lu2 = new double[n];
             V = new double[n];
             while (check == true)
@@ -387,17 +384,19 @@ namespace Eigenvalues
                 for (int i = 0; i < B.Length; i++)
                 {
                     Lu2[i] = B[i] / V[i];
-                    if (Lu2[i] - Lu1[i] < Convert.ToDouble(textBox4.Text))
+                    if (Math.Abs(Lu2[i] - Lu1[i]) < Convert.ToDouble(textBox2.Text))
                     {
                         check = false;
                     }
+                    Lu1[i] = Lu2[i];
 
                 }
-                for (int i = 0; i < Lu2.Length; i++)
-                {
-                    label4.Text += Convert.ToString(Lu2[i]);
-                    label4.Text += Convert.ToString(',');
-                }
+
+            }
+            for (int i = 0; i < Lu2.Length; i++)
+            {
+                label4.Text += Convert.ToString(Lu2[i]);
+                label4.Text += Convert.ToString(',');
             }
 
 
@@ -412,6 +411,10 @@ namespace Eigenvalues
 
         }
 
-        
+
+
+
+
+
     }
 }
