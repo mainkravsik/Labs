@@ -186,7 +186,7 @@ namespace Eigenvalues
             }
             else
             {
-                MessageBox.Show("Введите корректное число элементов!");
+                MessageBox.Show("Корректно введите размерность матрицы и погрешность!");
                 textBox1.Focus();
 
             }
@@ -288,6 +288,18 @@ namespace Eigenvalues
 
                                     groupBox2.Visible = false;
                                     textBox3.Enabled = false;
+                                    button3.Enabled = true;
+                                    button3.Visible = true;
+                                    label4.Enabled = true;
+                                    label4.Visible = true;
+                                    label5.Enabled = true;
+                                    label5.Visible = true;
+                                    label6.Enabled = true;
+                                    label6.Visible = true;
+                                    label7.Enabled = true;
+                                    label7.Visible = true;
+                                    label8.Enabled = true;
+                                    label8.Visible = true;
 
 
                                 }
@@ -328,6 +340,8 @@ namespace Eigenvalues
                 MessageBox.Show("Не корректный формат данных, эжжи!!!");
                 textBox3.Focus();
             }
+            
+
         }
 
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
@@ -362,20 +376,7 @@ namespace Eigenvalues
             }
         }
 
-        private void textBox2_KeyPress_2(object sender, KeyPressEventArgs e)
-        {
-            char number = e.KeyChar;
-
-            if (!Char.IsDigit(number) && number != ',')
-            {
-                e.Handled = true;
-            }
-
-            if (number == 13)
-            {
-                button1_Click(this, EventArgs.Empty);
-            }
-        }
+        
 
 
 
@@ -458,6 +459,21 @@ namespace Eigenvalues
         private void groupBox3_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void textBox2_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char number = e.KeyChar;
+
+            if (!Char.IsDigit(number) && number != ',' && number != 0x08)
+            {
+                e.Handled = true;
+            }
+
+            if (number == 13)
+            {
+                button1_Click(this, EventArgs.Empty);
+            }
         }
     }
 }
