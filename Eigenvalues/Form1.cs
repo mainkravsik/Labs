@@ -17,12 +17,13 @@ namespace Eigenvalues
         
         Label[,] L;
         double[,] A;
-        double[] B;
+        double[] B; double[] B1; double[] B2;
         double[] V;
         double[] Lu1; double[] Lu2; double[] Lu3; double[] Lu4;
         double[,] UL;
         double N;
         int n;
+        bool tr=true;
         int pog;
         int m1;
         int m2;
@@ -57,7 +58,7 @@ namespace Eigenvalues
             {
                 Parent = panel,
                 Left = 20,
-                Top = Y0 + 75,
+                Top = Y0 + 25,
 
                 Text = shapka,
                 Width = 500,
@@ -161,6 +162,7 @@ namespace Eigenvalues
 
             if (textBox1.Text != "" && Convert.ToInt32(textBox1.Text) > 1 && textBox2.Text != "")
             {
+                tr = false;
                 WriteLine("Матрица А и Нулевое приближение собственного вектора Y: ", ref Ypos, ref panel1);
                 a = true;
                 n = Convert.ToInt32(textBox1.Text);
@@ -181,12 +183,16 @@ namespace Eigenvalues
                 label3.Text = "Элемент [1,1] =";
                 textBox3.Focus();
                 button1.Enabled = false;
+                textBox3.Left = 100;
+                button2.Left = 197;
 
 
             }
             else
             {
+                
                 MessageBox.Show("Корректно введите размерность матрицы и погрешность!");
+               
                 textBox1.Focus();
 
             }
@@ -209,7 +215,7 @@ namespace Eigenvalues
                                 {
                                     Parent = panel1,
                                     Left = (50 * m2) + 20,
-                                    Top = 100 + 25 * m1
+                                    Top = 50 + 25 * m1
                                 };
                                 string str;
                                 if (Convert.ToDouble(textBox3.Text) >= 0)
@@ -240,7 +246,7 @@ namespace Eigenvalues
                                         {
                                             Parent = panel1,
                                             Left = 50 * n + 20,
-                                            Top = 100 + 25 * i,
+                                            Top = 50 + 25 * i,
                                             Text = "I",
                                             Width = 10
                                         };
@@ -274,7 +280,7 @@ namespace Eigenvalues
                                 {
                                     Parent = panel1,
                                     Left = 50 * n + 50,
-                                    Top = 100 + 25 * m3,
+                                    Top = 50 + 25 * m3,
                                     Text = textBox3.Text,
                                     Width = 40
                                 };
@@ -288,8 +294,8 @@ namespace Eigenvalues
 
                                     groupBox2.Visible = false;
                                     textBox3.Enabled = false;
-                                    button3.Enabled = true;
                                     button3.Visible = true;
+                                    button3.Enabled = true;
                                     label4.Enabled = true;
                                     label4.Visible = true;
                                     label5.Enabled = true;
@@ -300,6 +306,12 @@ namespace Eigenvalues
                                     label7.Visible = true;
                                     label8.Enabled = true;
                                     label8.Visible = true;
+                                    label9.Enabled = true;
+                                    label9.Visible = true;
+                                    label10.Enabled = true;
+                                    label10.Visible = true;
+                                    
+
 
 
                                 }
@@ -323,25 +335,23 @@ namespace Eigenvalues
                     else
                     {
                         textBox3.Text = "";
-                        MessageBox.Show("Не корректный формат данных, эжжи!!!");
+                        MessageBox.Show("Не корректный формат данных!");
                         textBox3.Focus();
                     }
                 }
                 else
                 {
                     textBox3.Text = "";
-                    MessageBox.Show("Не корректный формат данных, эжжи!!!");
+                    MessageBox.Show("Не корректный формат данных!");
                     textBox3.Focus();
                 }
             }
             else
             {
                 textBox3.Text = "";
-                MessageBox.Show("Не корректный формат данных, эжжи!!!");
+                MessageBox.Show("Не корректный формат данных!");
                 textBox3.Focus();
             }
-            
-
         }
 
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
@@ -354,9 +364,10 @@ namespace Eigenvalues
                 e.Handled = true;
             }
 
-            if (number == 13)
+            if (number == 13 && tr == true)
             {
                 button1_Click(this, EventArgs.Empty);
+                
             }
 
         }
@@ -370,21 +381,36 @@ namespace Eigenvalues
                 e.Handled = true;
             }
 
-            if (e.KeyChar == 13)
+            if (e.KeyChar == 13 )
             {
                 button2_Click(this, EventArgs.Empty);
+                
             }
         }
+        private void textBox2_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char number = e.KeyChar;
 
+            if (!Char.IsDigit(number) && number != ',' && number != 0x08)
+            {
+                e.Handled = true;
+            }
+
+            if (number == 13 && tr==true)
+            {
+                button1_Click(this, EventArgs.Empty);
+                
+            }
+        }
         
 
 
 
         private void button3_Click(object sender, EventArgs e)
         {
-            bool check = true;
+            bool check = true; bool check2 = true;
             int t = 0;
-            Lu1 = new double[n]; Lu2 = new double[n]; Lu3 = new double[n]; Lu4 = new double[n];
+            Lu1 = new double[n]; Lu2 = new double[n]; Lu3 = new double[n]; Lu4 = new double[n]; B1 = new double[n]; B2 = new double[n];
             V = new double[n];
             while (check == true)
             {
@@ -395,6 +421,7 @@ namespace Eigenvalues
                 for (int i = 0; i < B.Length; i++)
                 {
                     Lu2[i] = B[i] / V[i];
+                    B1[i] = V[i];
                     if (Math.Abs(Lu2[i] - Lu1[i]) < Convert.ToDouble(textBox2.Text))
                     {
                         check = false;
@@ -411,10 +438,12 @@ namespace Eigenvalues
             for (int i = 0; i < V.Length; i++)
             {
                 B[i] = Lu2[i] - V[i];
+                //label10.Text += Convert.ToString(B[i]);
+                //label10.Text += Convert.ToString("; ");
 
             }
             ZeroMass(V);
-            while (check == true)
+            while (check2 == true)
             {
                 N = LenghtV(B);
                 FindX(B, V, N);//V=Массиву X(Y/длиннуY)
@@ -423,9 +452,10 @@ namespace Eigenvalues
                 for (int i = 0; i < B.Length; i++)
                 {
                     Lu4[i] = B[i] / V[i];
+                    B2[i] = V[i];
                     if (Math.Abs(Lu4[i] - Lu3[i]) < Convert.ToDouble(textBox2.Text))
                     {
-                        check = false;
+                        check2 = false;
                     }
                     Lu3[i] = Lu4[i];
 
@@ -438,22 +468,26 @@ namespace Eigenvalues
             for (int i = 0; i < Lu2.Length; i++)
             {
                 
-                label4.Text += Convert.ToString(Math.Round(Lu2[i],3));
-                label4.Text += Convert.ToString("; ");
-                label6.Text += Convert.ToString(Math.Round(Lu4[i]));
-                label6.Text += Convert.ToString("; ");
+                label7.Text += Convert.ToString(Math.Round(B1[i],3));
+                label7.Text += Convert.ToString("; ");
+                label8.Text += Convert.ToString(Math.Round(Lu2[i],3));
+                label8.Text += Convert.ToString("; ");
+                label9.Text += Convert.ToString(Math.Round(B2[i],3));
+                label9.Text += Convert.ToString("; ");
+                label10.Text += Convert.ToString(Math.Round(Lu4[i],3));
+                label10.Text += Convert.ToString("; ");
             }
-            
 
 
 
 
-                //for (int i = 0; i < B.Length; i++)
-                //{
-                //    label4.Text += Convert.ToString(B[i]);
-                //    label4.Text += Convert.ToString(',');
-                //}
 
+            //for (int i = 0; i < B.Length; i++)
+            //{
+            //    label4.Text += Convert.ToString(B[i]);
+            //    label4.Text += Convert.ToString(',');
+            //}
+            button3.Enabled = false;
             }
 
         private void groupBox3_Enter(object sender, EventArgs e)
@@ -461,19 +495,78 @@ namespace Eigenvalues
 
         }
 
-        private void textBox2_KeyPress(object sender, KeyPressEventArgs e)
+        private void button4_Click(object sender, EventArgs e)
         {
-            char number = e.KeyChar;
+            Ypos = 0;
+            panel1.Controls.Clear();
+            groupBox2.Visible = false;
+            textBox1.Focus();
+            button3.Visible = false;
+            button3.Enabled = false;
+            label4.Enabled = false;
+            label4.Visible = false;
+            label5.Enabled = false;
+            label5.Visible = false;
+            label6.Enabled = false;
+            label6.Visible = false;
+            label7.Enabled = false;
+            label7.Visible = false;
+            label8.Enabled = false;
+            label8.Visible = false;
+            label9.Visible = false;
+            label10.Visible = false;
+            button1.Enabled = true;
+            tr = true;
+            label7.Text = "Max X:"; label8.Text = "Max λ:"; label9.Text = "Min X:"; label10.Text = "Min λ:"; label5.Text = "Количество итераций: ";
+        }
 
-            if (!Char.IsDigit(number) && number != ',' && number != 0x08)
-            {
-                e.Handled = true;
-            }
+        private void button5_Click(object sender, EventArgs e)
+        {
+            //textBox1.Text = Convert.ToString(3);
+            //textBox2.Text = "0,0001";
+            //button1_Click(this, EventArgs.Empty);
+            //textBox3.Text = Convert.ToString(5);
+            //button2_Click(this, EventArgs.Empty);
+            //textBox3.Text = Convert.ToString(1);
+            //button2_Click(this, EventArgs.Empty);
+            //textBox3.Text = Convert.ToString(2);
+            //button2_Click(this, EventArgs.Empty);
+            //textBox3.Text = Convert.ToString(1);
+            //button2_Click(this, EventArgs.Empty);
+            //textBox3.Text = Convert.ToString(4);
+            //button2_Click(this, EventArgs.Empty);
+            //textBox3.Text = Convert.ToString(1);
+            //button2_Click(this, EventArgs.Empty);
+            //textBox3.Text = Convert.ToString(2);
+            //button2_Click(this, EventArgs.Empty);
+            //textBox3.Text = Convert.ToString(1);
+            //button2_Click(this, EventArgs.Empty);
+            //textBox3.Text = Convert.ToString(3);
+            //button2_Click(this, EventArgs.Empty);
+            //textBox3.Text = Convert.ToString(1);
+            //button2_Click(this, EventArgs.Empty);
+            //textBox3.Text = Convert.ToString(2);
+            //button2_Click(this, EventArgs.Empty);
+            //textBox3.Text = Convert.ToString(2);
+            //button2_Click(this, EventArgs.Empty);
 
-            if (number == 13)
-            {
-                button1_Click(this, EventArgs.Empty);
-            }
+
+            //A[1, 1] = 5;
+            //A[1, 2] = 1;
+            //A[1, 3] = 2;
+            //A[2, 1] = 1;
+            //A[2, 2] = 4;
+            //A[2, 3] = 1;
+            //A[3, 1] = 2;
+            //A[3, 2] = 1;
+            //A[3, 3] = 3;
+
+
+        }
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
