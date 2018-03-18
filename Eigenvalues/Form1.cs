@@ -104,7 +104,7 @@ namespace Eigenvalues
 
         }
 
-            public static double LenghtV(double[] b)
+        public static double LenghtV(double[] b)
         {
             double n = 0;
             for (int i = 0; i <= b.Length - 1; i++)
@@ -381,7 +381,6 @@ namespace Eigenvalues
 
         private void button3_Click(object sender, EventArgs e)
         {
-            int no = Convert.ToInt32(textBox1.Text);
             bool check = true;
             int t = 0;
             Lu1 = new double[n]; Lu2 = new double[n]; Lu3 = new double[n]; Lu4 = new double[n];
@@ -405,11 +404,12 @@ namespace Eigenvalues
                 }
 
             }
+            int no = V.Length;
             ZeroMass(V);
             Diag(A, V, no);
             for (int i = 0; i < V.Length; i++)
             {
-                B[i] = V[i] - Lu2[i];
+                B[i] = Lu2[i] - V[i];
 
             }
             ZeroMass(V);
@@ -427,7 +427,7 @@ namespace Eigenvalues
                         check = false;
                     }
                     Lu3[i] = Lu4[i];
-                    t++;
+
 
                 }
 
@@ -439,7 +439,7 @@ namespace Eigenvalues
                 
                 label4.Text += Convert.ToString(Math.Round(Lu2[i],3));
                 label4.Text += Convert.ToString("; ");
-                label6.Text += Convert.ToString(Math.Round(Lu4[i], 3));
+                label6.Text += Convert.ToString(Math.Round(Lu4[i]));
                 label6.Text += Convert.ToString("; ");
             }
             
